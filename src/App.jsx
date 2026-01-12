@@ -32,7 +32,7 @@ export default function TeamTracker() {
   useEffect(() => { localStorage.setItem('teamtracker-events', JSON.stringify(events)); }, [events]);
   useEffect(() => { localStorage.setItem('teamtracker-notes', teamNotes); }, [teamNotes]);
 
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 0, 12));
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [newEvent, setNewEvent] = useState({ title: '', date: '', color: 'bg-violet-500' });
   const [showEventForm, setShowEventForm] = useState(false);
   const [showAddMember, setShowAddMember] = useState(false);
@@ -93,7 +93,7 @@ export default function TeamTracker() {
   };
 
   const isToday = (day) => {
-    const today = new Date(2025, 0, 12);
+    const today = new Date();
     return day === today.getDate() && currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear();
   };
 
@@ -153,7 +153,7 @@ export default function TeamTracker() {
               <div className="flex items-start justify-between gap-4 mb-3">
                 <input type="text" value={member.name} onChange={(e) => updateMember(member.id, 'name', e.target.value)}
                   className="text-lg font-bold text-gray-800 bg-transparent border-b-2 border-transparent hover:border-gray-300 focus:border-blue-500 focus:outline-none" />
-                <button onClick={() => removeMember(member.id)} className="bg-transparent text-gray-400 hover:text-red-500 transition p-2 hover:bg-red-50 rounded-lg border-none">
+                <button onClick={() => removeMember(member.id)} className="bg-white text-gray-400 hover:text-red-500 hover:bg-red-50 transition p-2 rounded-lg border border-gray-200">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                 </button>
               </div>
@@ -244,8 +244,8 @@ export default function TeamTracker() {
                   className="w-full text-gray-500 text-sm bg-transparent border-b border-transparent hover:border-gray-300 focus:border-blue-500 focus:outline-none" />
               </td>
               <td className="px-5 py-4">
-                <button onClick={() => removeMember(member.id)} className="text-gray-300 hover:text-red-500 transition p-1">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                <button onClick={() => removeMember(member.id)} className="bg-white text-gray-400 hover:text-red-500 hover:bg-red-50 transition p-1 rounded border border-gray-200">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
               </td>
             </tr>
@@ -308,11 +308,11 @@ export default function TeamTracker() {
           <PriorityBadge priority={member.priority} />
           <StatusBadge status={member.status} />
           {member.dueDate && <span className="text-sm text-gray-400">{member.dueDate}</span>}
-          <button onClick={() => setEditingMember(member)} className="text-gray-400 hover:text-blue-500 p-1">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+          <button onClick={() => setEditingMember(member)} className="bg-white text-gray-400 hover:text-blue-500 hover:bg-blue-50 p-1 rounded border border-gray-200">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
           </button>
-          <button onClick={() => removeMember(member.id)} className="text-gray-300 hover:text-red-500 p-1">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+          <button onClick={() => removeMember(member.id)} className="bg-white text-gray-400 hover:text-red-500 hover:bg-red-50 p-1 rounded border border-gray-200">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
         </div>
       ))}
@@ -382,10 +382,10 @@ export default function TeamTracker() {
                     {['name', 'status', 'priority', 'dueDate'].map(o => <option key={o} value={o}>{o}</option>)}
                   </select>
                 </div>
-                <div className="flex bg-gray-100 rounded-lg p-1 ml-auto">
+                <div className="flex rounded-lg p-1 ml-auto border border-gray-200 bg-white">
                   {teamViews.map(tv => (
                     <button key={tv.id} onClick={() => setTeamView(tv.id)} title={tv.label}
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition ${teamView === tv.id ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'}`}>
+                      className={`px-3 py-2 rounded-md text-sm font-medium transition ${teamView === tv.id ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}>
                       {tv.icon}
                     </button>
                   ))}
@@ -461,6 +461,25 @@ export default function TeamTracker() {
                 <button onClick={() => setShowEventForm(true)} className="text-blue-600 font-semibold hover:text-blue-700">+ Add Event</button>
               )}
             </div>
+            
+            {/* Event List */}
+            {events.length > 0 && (
+              <div className="p-5 border-t border-gray-200">
+                <h3 className="text-sm font-bold text-gray-600 uppercase tracking-wide mb-3">All Events</h3>
+                <div className="flex flex-wrap gap-2">
+                  {events.sort((a, b) => a.date.localeCompare(b.date)).map(e => (
+                    <div key={e.id} className="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2 group">
+                      <div className={`w-3 h-3 rounded-full ${e.color}`}></div>
+                      <span className="text-sm font-medium text-gray-700">{e.title}</span>
+                      <span className="text-xs text-gray-400">{e.date}</span>
+                      <button onClick={() => removeEvent(e.id)} className="bg-white text-gray-400 hover:text-red-500 hover:bg-red-50 p-1 rounded border border-gray-200 ml-1">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
